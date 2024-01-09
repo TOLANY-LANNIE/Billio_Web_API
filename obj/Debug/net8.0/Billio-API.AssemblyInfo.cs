@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Billio-API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7c27f7b0d58e8f7ce4a99bdd166780a4afc2e4aa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+73a9d7d9db9e40b3029ed65d2da1828b50aafe9c")]
 [assembly: System.Reflection.AssemblyProductAttribute("Billio-API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Billio-API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

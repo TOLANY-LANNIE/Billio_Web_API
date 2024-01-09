@@ -1,6 +1,7 @@
 using Microsoft.OpenApi.Models;
 using BillioAPI.Models;
 using BillioAPI.Services;
+using Microsoft.Extensions.Options;
 using BillioAPI.Controllers;
 
 // Create a new WebApplication instance using the provided command-line arguments.
@@ -27,6 +28,18 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1" });                            // Version of the API
    });
 
+// Add CORS services
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 // Enable Swagger middleware to serve the generated Swagger JSON file.
@@ -37,6 +50,8 @@ app.UseSwaggerUI(c =>
     // Specify the Swagger JSON endpoint for version 1 of the API.
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Billio API V1");
 });
+
+app.UseCors(); // Use CORS middleware here
   
 app.MapGet("/", () => "Hello World!");
 app.MapControllers();
