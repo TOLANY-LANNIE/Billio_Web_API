@@ -3,6 +3,7 @@ using BillioAPI.Models;
 using BillioAPI.Services;
 using Microsoft.Extensions.Options;
 using BillioAPI.Controllers;
+using BillioAPI.Repository;
 
 // Create a new WebApplication instance using the provided command-line arguments.
 var builder = WebApplication.CreateBuilder(args);

@@ -23,12 +23,12 @@ public class Bills{
     /// <summary>
     ///  Get or set the <see cref="Date"/>  Bill Due Date property
     /// </summary>
-    public Date due_date{get;set;}
+    public DateTime due_date{get;set;}
 
     /// <summary>
     ///  Get or set the <see cref="string"/>  Bill Budget property
     /// </summary>
-    public string budget_id{get; set;}
+    public string? budget_id{get; set;}
 
     /// <summary>
     ///  Get or set the <see cref="decimal"/>  Bill Amount property

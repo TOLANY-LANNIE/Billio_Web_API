@@ -12,46 +12,72 @@ namespace BillioAPI.Controllers;
 [Route("api/[controller]")]
 public class BudgetController: Controller{
     
-    private readonly BudgetService _budgetService;
+    private readonly IBudgetService _budgetService;
 
-    public BudgetController(BudgetService budgetService){
-        _budgetService =budgetService;
+    public BudgetController(IBudgetService budgetService)
+    {
+        _budgetService = budgetService;
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Budget>> GetByID(string id){
-        var vbudget = await _budgetService.GetByIdAsync(id);
-
-        if (vbudget is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(vbudget);
-    }
+    // GET: api/Budget
     [HttpGet]
-    public async Task<List<Budget>> Get(){
-        return await _budgetService.GetAsync();
+    public async Task<IEnumerable<Budget>> Get()
+    {
+        return await _budgetService.GetAllBudgetsAsync();
     }
 
-    [HttpPost]
-     public async Task<IActionResult> Post([FromBody] Budget budget){
-        await _budgetService.CreateAsync(budget);
-        return CreatedAtAction(nameof(Get), new {id=budget.Id}, budget);
-     }
+    // GET: api/Budget/5
+    [HttpGet("{id}", Name = "Get")]
+    public async Task<ActionResult<Budget>> Get(string id)
+    {
+        var budget = await _budgetService.GetBudgetByIdAsync(id);
 
-     [HttpPut("{id}")]
-      public async Task<IActionResult> UpdateBudget(string id,[FromBody] Budget updatedBudget){
-        if(id !=updatedBudget.Id){
-             return BadRequest("ID mismatch in URL and request body");
+        if (budget == null)
+        {
+            return NotFound();
         }
-        await _budgetService.PutAsync(id, updatedBudget);
-        return NoContent();
-      }
 
-      [HttpDelete("{id}")]
-      public async Task<IActionResult> DeleteBudget(string id){
-        await _budgetService.DeleteAsync(id);
+        return budget;
+    }
+
+    // POST: api/Budget
+    [HttpPost]
+    public async Task<ActionResult> Post([FromBody] Budget budget)
+    {
+        await _budgetService.AddBudgetAsync(budget);
+
+        return CreatedAtAction(nameof(Get), new { id = budget.Id }, budget);
+    }
+
+    // PUT: api/Budget/5
+    [HttpPut("{id}")]
+    public async Task<ActionResult> Put(string id, [FromBody] Budget budget)
+    {
+        var existingBudget = await _budgetService.GetBudgetByIdAsync(id);
+
+        if (existingBudget == null)
+        {
+            return NotFound();
+        }
+
+        await _budgetService.UpdateBudgetAsync(id, budget);
+
         return NoContent();
-      } 
+    }
+
+    // DELETE: api/Budget/5
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Delete(string id)
+    {
+        var budget = await _budgetService.GetBudgetByIdAsync(id);
+
+        if (budget == null)
+        {
+            return NotFound();
+        }
+
+        await _budgetService.DeleteBudgetAsync(id);
+
+        return NoContent();
+    }
 }

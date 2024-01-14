@@ -29,4 +29,9 @@ public class Transaction{
     /// </summary>
     public string user_id{get;set;} = null!;
 
+     /// <summary>
+    ///  Get or set the <see cref="DateTime"/>  Budget User property
+    /// </summary>
+    public DateTime date{get; set;}
+
 }
